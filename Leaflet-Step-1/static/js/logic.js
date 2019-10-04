@@ -16,16 +16,41 @@ function markerSize(magnitude) {
   return Math.pow(magnitude, 6.5)
 }
 
+function markerColor(magnitude) {
+  return 230 - (7*magnitude)
+}
+
 d3.json(url, result => {
   var earthquakes = result.features;
   earthquakes.forEach(earthquake =>{
+    if (earthquake.properties.mag < 5){
     L.circle([earthquake.geometry.coordinates[1], earthquake.geometry.coordinates[0]], {
       draggable: true,
       title: earthquake.properties.title,
       fillOpacity: 0.75,
-      color: "orange",
-      fillColor: "red",
-      radius: markerSize(earthquake.properties.mag)
-    }).bindPopup("<h2>" + earthquake.properties.place + "</h2> <hr> <h3>Magnitude: " + earthquake.properties.mag + "</h3>").addTo(myMap);
+      radius: markerSize(earthquake.properties.mag),
+      fillColor: "#fcb103",
+      color: "#fcb103"
+    }).bindPopup("<h2>" + earthquake.properties.place + "</h2> <hr> <h3>Magnitude: " + earthquake.properties.mag + "</h3>").addTo(myMap);}
+
+    else if (earthquake.properties.mag < 6) {
+      L.circle([earthquake.geometry.coordinates[1], earthquake.geometry.coordinates[0]], {
+        draggable: true,
+        title: earthquake.properties.title,
+        fillOpacity: 0.75,
+        radius: markerSize(earthquake.properties.mag),
+        fillColor: "#fc6b03",
+        color: "#fc6b03"
+      }).bindPopup("<h2>" + earthquake.properties.place + "</h2> <hr> <h3>Magnitude: " + earthquake.properties.mag + "</h3>").addTo(myMap);}
+
+    else if(earthquake.properties.mag < 7) {
+      L.circle([earthquake.geometry.coordinates[1], earthquake.geometry.coordinates[0]], {
+        draggable: true,
+        title: earthquake.properties.title,
+        fillOpacity: 0.75,
+        radius: markerSize(earthquake.properties.mag),
+        fillColor: "#fc1c03",
+        color: "#fc1c03"
+      }).bindPopup("<h2>" + earthquake.properties.place + "</h2> <hr> <h3>Magnitude: " + earthquake.properties.mag + "</h3>").addTo(myMap);}
   });
 });
